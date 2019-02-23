@@ -1,0 +1,72 @@
+# makefile for ordered linked list module +
+
+
+# use "gcc" to compile source files.
+CC = g++
+
+# the linker is also "gcc". It might be something else with other compilers.
+LD = g++
+
+# Compiler flags go here.
+CFLAGS = -g -Wall
+
+# Linker flags go here. Currently there aren't any, but if we'll switch to
+# code optimization, we might add "-s" here to strip debug info and symbols.
+LDFLAGS =
+
+# use this command to erase files.
+RM = /bin/rm -f
+
+# program executable file name.
+PROG = main
+
+# list of generated object files.
+OBJS = ./map/blotchmaker/astartest.o
+	./map/map/obs/map.o
+	./map/blotchmaker/obs/extra_math.o
+	./map/blotchmaker/obs/blotchmaker.o
+	./map/pathfinding/obs/mapsearch.o
+
+
+
+
+# top-level rule to create the whole program.
+all: $(PROG)
+
+
+$(PROG):  $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(PROG)
+
+# for main
+./map/blotchmaker/obs/astartest.o: ./map/blotchmaker/astartest.cc
+	$(CC) $(CFLAGS) -c ./map/blotchmaker/astartest.cc
+
+#for map
+./map/map/obs/map.o: ./map/map/map.cc ./map/map/map.h
+	$(CC) $(CFLAGS) -c ./map/map/map.cc
+
+#for blotchmaker
+./map/blotchmaker/obs/blotchmaker.o: ./map/blotchmaker/blotchmaker.cc ./map/blotchmaker/oblotchmaker.h
+	$(CC) $(CFLAGS) -c ./map/blotchmaker/blotchmaker.cc
+
+#for extra_math
+./map/blotchmaker/obs/extra_math.o: ./map/blotchmaker/extra_math.cc ./map/blotchmaker/extra_math.h
+	$(CC) $(CFLAGS) -c ./map/blotchmaker/extra_math.cc
+
+#for mapsearch
+./map/pathfinding/obs/mapsearch.o: ./map/pathfinding/mapsearch.cc ./map/pathfinding/mapsearch.h
+	$(CC) $(CFLAGS) -c ./map/pathfinding/mapsearch.cc
+
+
+
+
+
+
+
+
+
+
+# cleaning everything that can be automatically recreated with "make".
+#clean:
+#        /bin/rm -f main main.o
+
